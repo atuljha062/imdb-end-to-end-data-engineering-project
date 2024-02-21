@@ -151,7 +151,7 @@ def lambda_handler(event, context):
             soup = BeautifulSoup(movie_data, 'html.parser')
             
             # getting the list of all the links tags to individual movies
-            movie_links = soup.find_all("a", attrs={"class":"ipc-title-link-wrapper"}, limit=50)
+            movie_links = soup.find_all("a", attrs={"class":"ipc-title-link-wrapper"}, limit=100)
             
             movie_links_list = []
             
@@ -160,8 +160,8 @@ def lambda_handler(event, context):
                 movie_links_list.append("https://www.imdb.com" + link.get('href'))
                 
             # creating dictionary for storing data 
-            movie_dict = {'movie_ranking':[], 'movie_name':[], 'imdb_rating':[], 'user_review_count':[]}
-            movie_meta_data_dict = {'movie_name':[], 'release_year':[], 'movie_duration':[], 'director':[], 'genres':[], 'language':[]}
+            movie_dict = {'movie_ranking':[], 'movie_name':[], 'imdb_rating':[], 'user_review_count':[], 'load_datetime':[]}
+            movie_meta_data_dict = {'movie_ranking':[],'movie_name':[], 'release_year':[], 'movie_duration':[], 'director':[], 'genres':[], 'language':[], 'load_datetime':[]}
             
             # looping through each and every link and getting the data
             for link in movie_links_list:
@@ -173,13 +173,16 @@ def lambda_handler(event, context):
                 movie_dict['movie_name'].append(get_movie_name(new_soup))
                 movie_dict['imdb_rating'].append(get_imdb_rating(new_soup))
                 movie_dict['user_review_count'].append(get_user_review_count(new_soup))
-                
+                movie_dict['load_datetime'].append(datetime.now())
+    
+                movie_meta_data_dict['movie_ranking'].append(get_movie_ranking(new_soup))
                 movie_meta_data_dict['movie_name'].append(get_movie_name(new_soup))
                 movie_meta_data_dict['release_year'].append(get_release_year(new_soup))
                 movie_meta_data_dict['movie_duration'].append(get_movie_duration(new_soup))
                 movie_meta_data_dict['director'].append(get_director(new_soup))
                 movie_meta_data_dict['genres'].append(get_genres(new_soup))
                 movie_meta_data_dict['language'].append(get_language(new_soup))
+                movie_meta_data_dict['load_datetime'].append(datetime.now())
             
             # creating data frame from dictionary 
             movie_df = pd.DataFrame.from_dict(movie_dict)
