@@ -10,6 +10,9 @@ In this project, we've developed a comprehensive data pipeline on Amazon Web Ser
 
 I have extracted data from the IMDb website's "Top 250 Movies" chart using the Python programming language, specifically leveraging the **requests** library to send HTTP requests to the webpage and the **BeautifulSoup** library to parse and extract relevant information from the HTML content retrieved. This process allows for the retrieval of various data points such as movie titles, ratings, release years, directors, and genres, providing a comprehensive dataset for further analysis and processing. This extracted data can be utilized for a variety of purposes, including statistical analysis, visualization, and machine learning applications within the domain of film and entertainment.
 
+### Data Model
+![Data Model Diagram](https://github.com/atuljha062/imdb-end-to-end-data-engineering-project/blob/main/imdb_data_model.jpg)
+
 ### Services Used
 1. **AWS S3 (Simple Storage Service):** Amazon S3 (Simple Storage Service) is a highly scalable object storage service that can store and retrieve any amount of data from anywhere on the web. It is commonly used to store and distribute large media files, data backups and static website files.
   
